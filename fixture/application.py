@@ -16,6 +16,5 @@ class Application:
     def open_home_page(self):
         self.driver.get("http://localhost/addressbook/")
 
-
     def destroy(self):
         self.driver.quit()
