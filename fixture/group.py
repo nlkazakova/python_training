@@ -31,7 +31,7 @@ class GroupHelper:
             self.app.driver.find_element(By.NAME, filed_name).send_keys(text)
 
     def delete_first_group(self):
-        self.open_groups_page();
+        self.open_groups_page()
         self.select_first_group()
         # submit deletion
         self.app.driver.find_element(By.NAME, "delete").click()
@@ -54,3 +54,7 @@ class GroupHelper:
 
     def return_to_groups_page(self):
         self.app.driver.find_element(By.LINK_TEXT, "group page").click()
+
+    def count(self):
+        self.open_groups_page()
+        return len(self.app.driver.find_elements(By.NAME, "selected[]"))
