@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from selenium import webdriver
 
 from fixture.group import GroupHelper
