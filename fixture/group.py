@@ -31,11 +31,11 @@ class GroupHelper:
         self.change_field_value("group_header", group.header)
         self.change_field_value("group_footer", group.footer)
 
-    def change_field_value(self, filed_name, text):
+    def change_field_value(self, field_name, text):
         if text is not None:
-            self.app.driver.find_element(By.NAME, filed_name).click()
-            self.app.driver.find_element(By.NAME, filed_name).clear()
-            self.app.driver.find_element(By.NAME, filed_name).send_keys(text)
+            self.app.driver.find_element(By.NAME, field_name).click()
+            self.app.driver.find_element(By.NAME, field_name).clear()
+            self.app.driver.find_element(By.NAME, field_name).send_keys(text)
 
     def delete_first_group(self):
         self.delete_group_by_index(0)

@@ -1,5 +1,6 @@
 from selenium import webdriver
 
+from fixture.contact import ContactHelper
 from fixture.group import GroupHelper
 from fixture.session import SessionHelper
 
@@ -10,6 +11,7 @@ class Application:
         self.driver = webdriver.Firefox()
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
+        self.contact = ContactHelper(self)
 
     def open_home_page(self):
         self.driver.get("http://localhost/addressbook/")
