@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 
 from model.contact import Contact
+import re
 
 
 class ContactHelper:
@@ -28,7 +29,7 @@ class ContactHelper:
                 all_phones = cells[5].text.splitlines()
                 self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id,
                                                   homephone=all_phones[0], mobilephone=all_phones[1],
-                                                  workphone=all_phones[2]))
+                                                  workphone=all_phones[2], secondaryphone=all_phones[3]))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -51,8 +52,17 @@ class ContactHelper:
         homephone = self.app.driver.find_element(By.NAME, "home").get_attribute("value")
         mobilephone = self.app.driver.find_element(By.NAME, "mobile").get_attribute("value")
         workphone = self.app.driver.find_element(By.NAME, "work").get_attribute("value")
+        secondaryphone = self.app.driver.find_element(By.NAME, "phone2").get_attribute("value")
         return Contact(firstname=firstname, lastname=lastname, id=id,
                        homephone=homephone, workphone=workphone,
-                       mobilephone=mobilephone)
+                       mobilephone=mobilephone, secondaryphone=secondaryphone)
 
-
+    def get_contact_from_view_page(self, index):
+        self.open_contact_view_by_index(index)
+        text = self.app.driver.find_element(By.ID, "content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        secondaryphone = re.search("P: (.*)", text).group(1)
+        return Contact(homephone=homephone, mobilephone=mobilephone,
+                       workphone=workphone, secondaryphone=secondaryphone)
