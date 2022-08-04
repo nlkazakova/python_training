@@ -1,4 +1,8 @@
+import time
+
 from selenium.webdriver.common.by import By
+
+from model.group import Group
 
 
 class GroupHelper:
@@ -7,8 +11,8 @@ class GroupHelper:
         self.app = app
 
     def open_groups_page(self):
-        if not self.app.driver.current_url.endswith("/group.php") \
-                and len(self.app.driver.find_elements(By.NAME, "new")):
+        if not (self.app.driver.current_url.endswith("/group.php")
+                and len(self.app.driver.find_elements(By.NAME, "new")) > 0):
             self.app.driver.find_element(By.LINK_TEXT, "groups").click()
 
     def create(self, group):
@@ -60,3 +64,12 @@ class GroupHelper:
     def count(self):
         self.open_groups_page()
         return len(self.app.driver.find_elements(By.NAME, "selected[]"))
+
+    def get_group_list(self):
+        self.open_groups_page()
+        groups = []
+        for element in self.app.driver.find_elements(By.CSS_SELECTOR, "span.group"):
+            text = element.text
+            group_id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+            groups.append(Group(name=text, id=group_id))
+        return groups
