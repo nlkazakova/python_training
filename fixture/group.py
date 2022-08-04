@@ -56,9 +56,12 @@ class GroupHelper:
         self.app.driver.find_elements(By.NAME, "selected[]")[index].click()
 
     def modify_first_group(self, new_group_data):
+        self.modify_group_by_index(0)
+
+    def modify_group_by_index(self, index, new_group_data):
         self.open_groups_page()
         # select first group
-        self.select_first_group()
+        self.select_group_by_index(index)
         # open modification form
         self.app.driver.find_element(By.NAME, "edit").click()
         # fill group form
