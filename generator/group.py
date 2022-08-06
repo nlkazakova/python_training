@@ -1,11 +1,8 @@
+import os.path
 import random
 import string
+import json
 from model.group import Group
-
-constant = [
-    Group(name="name1", header="header1", footer="footer1"),
-    Group(name="name2", header="header2", footer="footer2"),
-]
 
 
 def random_string(prefix, maxlen):
@@ -19,3 +16,7 @@ testdata = [
     for header in ["", random_string("header", 20)]
     for footer in ["", random_string("footer", 20)]
 ]
+
+file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/groups.json")
+with open(file, "w") as f:
+    f.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
