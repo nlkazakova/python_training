@@ -47,13 +47,22 @@ class GroupHelper:
         self.app.driver.find_element(By.NAME, "delete").click()
         self.group_cache = None
 
+    def delete_group_by_id(self, id):
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        # submit deletion
+        self.app.driver.find_element(By.NAME, "delete").click()
+        self.group_cache = None
+
     def select_first_group(self):
         # select first group
         self.app.driver.find_element(By.NAME, "selected[]").click()
 
     def select_group_by_index(self, index):
-        # select first group
         self.app.driver.find_elements(By.NAME, "selected[]")[index].click()
+
+    def select_group_by_id(self, id):
+        self.app.driver.find_element(By.CSS_SELECTOR, "input[value='%s']" % id).click()
 
     def modify_first_group(self, new_group_data):
         self.modify_group_by_index(0, new_group_data)
